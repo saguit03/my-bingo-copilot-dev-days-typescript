@@ -17,33 +17,33 @@ export function GameScreen({
   onReset,
 }: GameScreenProps) {
   return (
-    <div className="flex flex-col min-h-full bg-gray-50">
-      {/* Header */}
-      <header className="flex items-center justify-between p-3 bg-white border-b border-gray-200">
+    <div className="rgb-app-shell flex flex-col min-h-full px-3 py-3 sm:px-5 sm:py-5">
+      <header className="rgb-hud rounded-lg px-3 py-3 sm:px-4 sm:py-4 mb-2">
+        <div className="flex items-center justify-between gap-3">
         <button
           onClick={onReset}
-          className="text-gray-500 text-sm px-3 py-1.5 rounded active:bg-gray-100"
+            className="rgb-title-font text-[0.55rem] sm:text-[0.62rem] px-2 py-2 border-2 border-[var(--rgb-line)] rounded bg-white/45 active:translate-y-px"
         >
-          ← Back
+            Retreat
         </button>
-        <h1 className="font-bold text-gray-900">Bingo Mixer</h1>
-        <div className="w-16"></div>
+          <h1 className="rgb-title-font text-[0.7rem] sm:text-[0.85rem] text-[var(--rgb-ink)] text-center">
+            Pokedex Bingo
+          </h1>
+          <span className="rgb-chip text-[0.78rem]">RGB</span>
+        </div>
       </header>
 
-      {/* Instructions */}
-      <p className="text-center text-gray-500 text-sm py-2 px-4">
-        Tap a square when you find someone who matches it.
+      <p className="rgb-hud rounded-lg text-center text-[var(--rgb-ink-soft)] text-[1rem] leading-tight py-2 px-3 mb-2">
+        Tap a tile when you find a matching trainer.
       </p>
 
-      {/* Bingo indicator */}
       {hasBingo && (
-        <div className="bg-amber-100 text-amber-800 text-center py-2 font-semibold text-sm">
-          🎉 BINGO! You got a line!
+        <div className="rgb-title-font rounded-lg text-center py-2 px-3 mb-2 text-[0.6rem] sm:text-[0.68rem] border-3 border-[var(--rgb-line)] bg-[var(--rgb-yellow)] text-[#4d3b11]">
+          Bingo Achieved. Party Bonus Unlocked.
         </div>
       )}
 
-      {/* Board */}
-      <div className="flex-1 flex items-center justify-center p-3">
+      <div className="flex-1 flex items-center justify-center py-2">
         <BingoBoard
           board={board}
           winningSquareIds={winningSquareIds}

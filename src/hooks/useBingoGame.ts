@@ -29,7 +29,7 @@ interface StoredGameData {
   version: number;
   gameState: GameState;
   board: BingoSquareData[];
-  winningLine: BingoLine | null;
+  winningLine: (BingoLine | { type: 'corners'; index: number; squares: number[] }) | null;
 }
 
 function validateStoredData(data: unknown): data is StoredGameData {
@@ -73,7 +73,7 @@ function validateStoredData(data: unknown): data is StoredGameData {
     const line = obj.winningLine as Record<string, unknown>;
     if (
       typeof line.type !== 'string' ||
-      !['row', 'column', 'diagonal'].includes(line.type) ||
+      !['row', 'column', 'diagonal', 'fourCorners', 'corners'].includes(line.type) ||
       typeof line.index !== 'number' ||
       !Array.isArray(line.squares)
     ) {
@@ -99,10 +99,15 @@ function loadGameState(): Pick<BingoGameState, 'gameState' | 'board' | 'winningL
     const parsed = JSON.parse(saved);
     
     if (validateStoredData(parsed)) {
+      const winningLine =
+        parsed.winningLine?.type === 'corners'
+          ? { ...parsed.winningLine, type: 'fourCorners' }
+          : parsed.winningLine;
+
       return {
         gameState: parsed.gameState,
         board: parsed.board,
-        winningLine: parsed.winningLine,
+        winningLine,
       };
     } else {
       console.warn('Invalid game state data in localStorage, clearing...');

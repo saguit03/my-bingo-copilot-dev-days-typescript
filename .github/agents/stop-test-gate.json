@@ -1,0 +1,12 @@
+{
+  "hooks": {
+    "Stop": [
+      {
+        "type": "command",
+        "command": "node .github/hooks/stop-test-gate.mjs",
+        "cwd": ".",
+        "timeout": 120
+      }
+    ]
+  }
+}
